@@ -9,6 +9,7 @@
 | Arquivos copiados para o Debian não aparecem lá dentro | copiados para `installed-rootfs/`; o rootfs real é `containers/debian/rootfs/` | criar um arquivo-marca dentro e achar com `find` |
 | Serviço do Debian morre quando o SSH fecha | `nohup` dentro do `proot-distro login`, que tem `--kill-on-exit` | `nohup proot-distro login ... &` do lado de fora |
 | Conexão SSH cai com código 255 ao parar um serviço | `pkill -f` casou com a linha de comando da própria sessão | pidfile + `kill $(cat arquivo.pid)` |
+| `kill` no PID do serviço do Debian e ele continua no ar | o PID do pidfile é do `proot`, que ignora `SIGTERM` | matar o processo filho do `proot` ([04](04-autostart.md)) |
 | Rota da API dá 500 com `FileNotFoundError` em `site-packages` | instalado sem `-e`; o código lê arquivo por caminho relativo | `pip install -e .` |
 | `git fetch origin <hash>` → `couldn't find remote ref` | hash abreviado | usar os 40 caracteres |
 | Repositório apt do guia oficial do Hermes dá 404 | publicado no guia antes de existir | instalar pelo Git no Debian |

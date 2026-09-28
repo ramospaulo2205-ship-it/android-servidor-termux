@@ -27,8 +27,21 @@ tail ~/logs/boot.log
 
 ## Parar um serviço
 
+Serviço que roda direto no Termux (página de status, por exemplo):
+
 ```bash
 kill $(cat ~/logs/<servico>.pid)
+```
+
+Serviço que roda no Debian: o pidfile guarda o PID do `proot`, e **o `proot`
+ignora o `SIGTERM`** (medido na referência: o gateway do Hermes seguiu vivo).
+Mande o sinal para o processo filho; ele encerra e o `proot` sai junto
+(na referência, em 5 s):
+
+```bash
+P=$(cat ~/logs/<servico>.pid)
+kill $(ps -eo pid,ppid | awk -v p=$P '$2==p{print $1}')
+while kill -0 $P 2>/dev/null; do sleep 1; done     # espera o proot sair
 ```
 
 **Nunca use `pkill -f <trecho>` numa sessão SSH.** O padrão casa com a linha de

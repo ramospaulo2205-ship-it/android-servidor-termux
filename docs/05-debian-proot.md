@@ -66,7 +66,7 @@ O `nohup` tem de envolver o próprio `proot-distro`:
 ```bash
 nohup proot-distro login debian -- bash -c "cd /root/app && exec .venv/bin/uvicorn ..." \
   >> ~/logs/app.log 2>&1 < /dev/null &
-echo $! > ~/logs/app.pid        # PID do proot; matar o proot derruba o serviço junto
+echo $! > ~/logs/app.pid        # PID do proot (para parar, ver docs/04: o proot ignora SIGTERM)
 ```
 
 Use `exec` no último comando, para o serviço substituir o `bash`.

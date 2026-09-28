@@ -24,7 +24,10 @@ ordem, o que perguntar, o que conferir e onde parar**.
    exibir (`grep ... | ssh ... 'cat >> .env'`). Para conferir, mostre só
    comprimento e prefixo.
 5. **Nunca `pkill -f <trecho>` por SSH.** Ele casa com a própria linha de
-   comando e derruba a sessão. Use pidfile: `kill $(cat ~/logs/x.pid)`.
+   comando e derruba a sessão. Use pidfile: `kill $(cat ~/logs/x.pid)` para
+   serviço do Termux; para serviço do Debian o pidfile é do `proot`, que ignora
+   `SIGTERM` — mate o processo filho ([docs/04](docs/04-autostart.md)) e confira
+   que o `proot` saiu.
 6. **Nunca `pkg install` avulso** com índice velho: simule e faça
    `full-upgrade` antes (fase 2).
 7. **Comando longo vai para segundo plano** (instalação de pacotes, `pip

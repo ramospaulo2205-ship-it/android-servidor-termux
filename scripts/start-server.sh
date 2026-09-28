@@ -69,7 +69,8 @@ fi
 
 # Serviços do Debian: o nohup ENVOLVE o proot-distro. O proot roda com
 # --kill-on-exit; um nohup dentro do login morreria junto com ele.
-# O PID guardado é o do proot: matá-lo derruba o serviço.
+# O PID guardado é o do proot, que IGNORA o SIGTERM: para parar o serviço,
+# mande o sinal ao processo filho dele (docs/04-autostart.md).
 if [ -d "$DEBIAN_ROOTFS$APP_DIR" ]; then
     if vivo "$LOGS/app.pid" "$APP_DIR"; then
         log "app já rodando (pid $(cat "$LOGS/app.pid"))"
